@@ -1,0 +1,43 @@
+name: GitHub PR MCP Review
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: |
+            Mygithubmcp/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: Mygithubmcp
+
+      - name: Run MCP review
+        run: npm run review
+        working-directory: Mygithubmcp
+        env:
+          MCP_SERVER_URL: ${{ secrets.MCP_SERVER_URL }}
+          MCP_REVIEW_QUERY: ${{ secrets.MCP_REVIEW_QUERY }}
+          MCP_COMMENT_HEADING: ${{ secrets.MCP_COMMENT_HEADING }}
+          MCP_COMMENT_FOOTER: ${{ secrets.MCP_COMMENT_FOOTER }}
+          GITHUB_OWNER: ${{ github.repository_owner }}
+          GITHUB_REPO: ${{ github.event.repository.name }}
+          GITHUB_PR_NUMBER: ${{ github.event.pull_request.number }}
+

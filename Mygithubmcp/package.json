@@ -1,0 +1,28 @@
+{
+  "name": "mygithubmcp",
+  "version": "1.0.0",
+  "description": "GitHub PR reviewer with MCP and webhook integrations",
+  "main": "index.js",
+  "scripts": {
+    "dev:webhook": "tsx src/webhookServer.ts",
+    "dev:mcp": "tsx src/mcpserver.ts",
+    "review": "tsx src/runMcpReview.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "@modelcontextprotocol/sdk": "^1.23.0",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.5",
+    "@types/node": "^24.10.1",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "@octokit/rest": "^21.0.0",
+    "tsx": "^4.20.6"
+  }
+}
+
